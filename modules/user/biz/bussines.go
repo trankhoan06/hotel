@@ -14,6 +14,7 @@ type UserStorage interface {
 	VerifyEmail(ctx context.Context, id int) error
 	CreateCode(ctx context.Context, data *model.CreateSendCode) error
 	GetSendCode(ctx context.Context, cond map[string]interface{}) (*model.SendCode, error)
+	ChangePassword(ctx context.Context, password, email string) error
 }
 type UserBiz struct {
 	store UserStorage

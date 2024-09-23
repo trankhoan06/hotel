@@ -3,15 +3,13 @@ package ginUser
 import (
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
-	"main.go/common"
-	TokenProvider "main.go/component"
 	"main.go/modules/user/biz"
 	"main.go/modules/user/storage"
 	"net/http"
 	"strconv"
 )
 
-func VerifyEmail(db *gorm.DB, provider TokenProvider.Provider) func(*gin.Context) {
+func VerifyCode(db *gorm.DB) func(*gin.Context) {
 	return func(c *gin.Context) {
 		userId, err := strconv.Atoi(c.Query("user_id"))
 		if err != nil {
@@ -24,13 +22,12 @@ func VerifyEmail(db *gorm.DB, provider TokenProvider.Provider) func(*gin.Context
 		}
 		token := c.Query("token")
 		store := storage.NewSqlModel(db)
-		hasher := common.NewSha265Hash()
-		business := biz.NewLoginUser(store, provider, hasher)
-		token1, err := business.VerifyCodeEmail(c.Request.Context(), token, userId, 60*60*24*30, code)
+		business := biz.NewUserBiz(store)
+		err = business.NewVerifyCode(c.Request.Context(), code, token, userId)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"msg": err.Error()})
 			return
 		}
-		c.JSON(http.StatusOK, gin.H{"token": token1})
+		c.JSON(http.StatusOK, gin.H{"data": true})
 	}
 }
