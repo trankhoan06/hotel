@@ -17,13 +17,13 @@ const (
 type User struct {
 	Id        int         `json:"id" gorm:"column:id"`
 	Role      *RoleUser   `json:"role" gorm:"column:role"`
-	Salt      string      `json:"salt" gorm:"column:salt"`
+	Salt      string      `json:"-" gorm:"column:salt"`
 	FirstName string      `json:"first_name" gorm:"column:first_name"`
 	LastName  string      `json:"last_name" gorm:"column:last_name"`
 	Phone     string      `json:"phone" gorm:"column:phone"`
 	Email     string      `json:"email" gorm:"column:email"`
 	Status    *StatusUser `json:"status" gorm:"column:status"`
-	Password  string      `json:"password" gorm:"column:password"`
+	Password  string      `json:"-" gorm:"column:password"`
 	IsEmail   bool        `json:"is_email" gorm:"column:is_email"`
 	CreateAt  time.Time   `json:"createAt" gorm:"column:create_at"`
 	UpdateAt  time.Time   `json:"updateAt" gorm:"column: update_at"`

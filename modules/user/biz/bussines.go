@@ -15,6 +15,8 @@ type UserStorage interface {
 	CreateCode(ctx context.Context, data *model.CreateSendCode) error
 	GetSendCode(ctx context.Context, cond map[string]interface{}) (*model.SendCode, error)
 	ChangePassword(ctx context.Context, password, email string) error
+	CreateTokenForgotPassword(ctx context.Context, data *model.ForgetPassword) error
+	UpdateTokenForgot(ctx context.Context, token string, user int) error
 }
 type UserBiz struct {
 	store UserStorage

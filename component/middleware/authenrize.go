@@ -16,8 +16,8 @@ type AuthenStorage interface {
 }
 
 func ExtractToken(token string) (string, error) {
-	t := strings.Split(token, "")
-	if len(t) < 2 || t[0] != "Bearer" || strings.TrimSpace(t[1]) == "" {
+	t := strings.Split(token, " ")
+	if t[0] != "Bearer" || len(t) < 2 || strings.TrimSpace(t[1]) == "" {
 		return "", errors.New("token has been fault")
 	}
 	return t[1], nil
