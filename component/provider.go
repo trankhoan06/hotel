@@ -3,8 +3,8 @@ package TokenProvider
 import "main.go/modules/user/model"
 
 type Provider interface {
-	Validate(token string) (Payload, error)
 	General(data Payload, expire int) (Token, error)
+	Validate(token string) (Payload, error)
 	GetSecret() string
 }
 type Payload interface {

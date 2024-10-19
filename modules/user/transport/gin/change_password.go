@@ -16,7 +16,7 @@ func ChangePassword(db *gorm.DB) func(*gin.Context) {
 		hash := common.NewSha265Hash()
 		store := storage.NewSqlModel(db)
 		business := biz.NewRegisterUser(store, hash)
-		if err := business.NewChangePassword(c.Request.Context(), password, request.GetEmail()); err != nil {
+		if err := business.NewChangePassword(c.Request.Context(), password, request.GetUserId()); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}

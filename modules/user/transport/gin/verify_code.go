@@ -23,7 +23,7 @@ func VerifyCode(db *gorm.DB) func(*gin.Context) {
 		token := c.Query("token")
 		store := storage.NewSqlModel(db)
 		business := biz.NewUserBiz(store)
-		token1, err := business.NewVerifyCode(c.Request.Context(), code, token, userId, 30*60)
+		token1, err := business.NewVerifyCodeForgot(c.Request.Context(), code, token, userId, 30*60)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"msg": err.Error()})
 			return
